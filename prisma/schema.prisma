@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id              String            @id @default(uuid())
+  FormTemplates   FormTemplate      @relation(fields: [TemplateId], references: [id])
+  TemplateId      String // one-to-many relation with form_template
+  FormSections    FormSection       @relation(fields: [SectionId], references: [id])
+  SectionId       String //one-to-many relation with form_section
+  Title           String
+  Description     String
+  DisplayCode     String
+  ResponseType    QueryResponseType
+  Score           Int
+  CorrectAnswer   String
+  Hint            String
+  CreatedAt       DateTime          @default(now())
+  UpdatedAt       DateTime          @default(now())
+  DeletedAt       DateTime          @default(now())
+  QuestionDetails QuestionDetail?
+  Response        Response[]
+}
+
+model FormTemplate {
+  id                      String        @id @default(uuid())
+  Title                   String
+  Description             String
+  CurrentVersion          Int
+  Type                    FormType
+  DisplayCode             String
+  OwnerUserId             String
+  RootSectionId           String
+  DefaultSectionNumbering Boolean
+  CreatedAt               DateTime      @default(now())
+  UpdatedAt               DateTime      @default(now())
+  DeletedAt               DateTime      @default(now())
+  Forms                   Form[]
+  FormSections            FormSection[]
+  Questions               Question[]
+  Response                Response[]
+}
+
+model FormSection {
+  id                String       @id @default(uuid())
+  FormTemplates     FormTemplate @relation(fields: [TemplateId], references: [id])
+  TemplateId        String //one-to-many relation with form_templates
+  SectionIdentifier String
+  Title             String
+  Description       String
+  DisplayCode       String       @default(uuid())
+  Sequence          Int
+  ParentSectionId   String
+  CreatedAt         DateTime     @default(now())
+  UpdatedAt         DateTime     @default(now())
+  DeletedAt         DateTime     @default(now())
+  Question          Question[]
+}
+
+model QuestionDetail {
+  id               String   @id @default(uuid())
+  Question         Question @relation(fields: [QuestionId], references: [id])
+  QuestionId       String   @unique //one-to-one relation with question
+  Option           String
+  OptionSequence   Int
+  FileResourceId   String
+  QuestionImageUrl String
+  RangeMin         Int
+  RangeMax         Int
+}
+
+model Form {
+  id                  String       @id @default(uuid())
+  FormTemplate        FormTemplate @relation(fields: [FormTemplateId], references: [id])
+  FormTemplateId      String //one-to-many relation with form_templates
+  FormUrl             String
+  Users               User         @relation(fields: [AnsweredByUserId], references: [id])
+  AnsweredByUserId    String // one-to-many relation with user
+  Status              FormStatus
+  SubmissionTimestamp DateTime     @default(now())
+  CreatedAt           DateTime     @default(now())
+  UpdatedAt           DateTime     @default(now())
+  DeletedAt           DateTime     @default(now())
+  Response            Response?
+}
+
+model Response {
+  id                  String            @id @default(uuid())
+  Forms               Form              @relation(fields: [FormId], references: [id])
+  FormId              String            @unique // one to one relation with form
+  FormTemplates       FormTemplate      @relation(fields: [FormTemplateId], references: [id])
+  FormTemplateId      String //one-to-many relation with form_templates
+  Questions           Question          @relation(fields: [QuestionId], references: [id])
+  QuestionId          String // one-to-many relation with question
+  ResponseType        QueryResponseType
+  IntegerValue        Int
+  FloatValue          Float
+  BooleanValue        Boolean
+  DateTimeValue       DateTime
+  Url                 String
+  FileResourceId      String
+  TextValue           String
+  SubmissionTimestamp DateTime
+  LastSaveTimestamp   DateTime
+  CreatedAt           DateTime          @default(now())
+  UpdatedAt           DateTime          @default(now())
+  DeletedAt           DateTime          @default(now())
+}
+
+model User {
+  id                 String              @id @default(uuid())
+  FirstName          String
+  LastName           String
+  CountryCode        Int
+  Phone              String
+  Email              String
+  Username           String
+  Password           String
+  CreatedAt          DateTime            @default(now())
+  UpdatedAt          DateTime            @default(now())
+  DeletedAt          DateTime            @default(now())
+  user_login_session UserLoginSessions[]
+  Form               Form[]
+}
+
+model UserLoginSessions {
+  id              String   @id @default(uuid())
+  User            User     @relation(fields: [UserId], references: [id])
+  UserId          String //one-to-one relation with users
+  IsActiveSession Boolean
+  StartedAt       DateTime @default(now())
+  ValidTill       DateTime
+  CreatedAt       DateTime @default(now())
+  UpdatedAt       DateTime @default(now())
+  DeletedAt       DateTime @default(now())
+}
+
+enum FormType {
+  Survey
+  Questionnaire
+  TestPaper
+  DataCollection
+}
+
+enum QueryResponseType {
+  Text
+  Float
+  Integer
+  Boolean
+  Object
+  TextArray
+  // FloatArray
+  // IntegerArray
+  // BooleanArray
+  // ObjectArray
+  SinglehoiceSelection
+  MultiChoiceSelection
+  File
+  Date
+  DateTime
+  Rating
+  Location
+  Range
+  //Ok //Acknowledgement
+  None //Not expecting response
+}
+
+enum FormStatus {
+  LinkShared
+  Presented
+  InProgress
+  Submitted
+}
