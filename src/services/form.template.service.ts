@@ -4,14 +4,15 @@ import { FormTemplateCreateModel, FormTemplateUpdateModel } from "../domain.type
 import { FormTemplateMapper } from "../mappers/form.template.mapper";
 
 
-export class ServiceFormTemplate {
+export class FormTemplateService {
     prisma: PrismaClient = null;
     constructor() {
         this.prisma = PrismaClientInit.instance().getPrismaInstance();
     }
 
     allFormTemplates = async () => {
-        const response = await this.prisma.formTemplate.findMany({});
+        const response = await this.prisma.formTemplate.findMany({
+        });
         return FormTemplateMapper.toArrayDto(response);
     };
 

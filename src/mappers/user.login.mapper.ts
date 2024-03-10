@@ -2,7 +2,7 @@
 
 import { UserLoginSessionResponseDto } from "../domain.types/forms/user.login.session.domain.types";
 
-export class FormMapper {
+export class UserLoginSessionMapper {
     static toDto = (record: any): UserLoginSessionResponseDto => {
         if (record === null) {
             return null;
@@ -34,7 +34,8 @@ export class FormMapper {
 
         const dtos: UserLoginSessionResponseDto[] = [];
 
-        record.forEach((element) => {
+        for (let i = 0; i < record.length; i++) {
+            const element = record[i];
             dtos.push({
                 id: element.id,
                 User: {
@@ -51,7 +52,7 @@ export class FormMapper {
                 StartedAt: element.StartedAt,
                 ValidTill: element.ValidTill
             });
-            return dtos;
-        })
+        }
+        return dtos;
     }
 }

@@ -2,20 +2,20 @@ export interface UserCreateModel {
     FirstName: string;
     LastName: string;
     CountryCode: number;
-    Phone: String;
-    Email: String;
-    Username: String;
-    Password: String;
+    Phone: string;
+    Email: string;
+    Username: string;
+    Password: string;
 }
 
 export interface UserUpdateModel {
     FirstName?: string;
     LastName?: string;
     CountryCode?: number;
-    Phone?: String;
-    Email?: String;
-    Username?: String;
-    Password?: String;
+    Phone?: string;
+    Email?: string;
+    Username?: string;
+    Password?: string;
 }
 
 export interface UserResponseDto {
@@ -23,9 +23,9 @@ export interface UserResponseDto {
     FirstName: string;
     LastName: string;
     CountryCode: number;
-    Phone: String;
-    Email: String;
-    Username: String;
-    Password: String;
+    Phone: string;
+    Email: string;
+    Username: string;
+    Password: string;
     CreatedAt: Date
 }

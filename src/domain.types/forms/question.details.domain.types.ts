@@ -2,8 +2,8 @@ export interface QuestionDetailsCreateModel {
     QuestionId:string;
     Option: string;
     OptionSequence: number;
-    FileResourceId: String;
-    QuestionImageUrl: String;
+    FileResourceId: string;
+    QuestionImageUrl: string;
     RangeMin: number;
     RangeMax: number;
 }
@@ -12,14 +12,14 @@ export interface QuestionDetailsUpdateModel {
     QuestionId?:string;
     Option?: string;
     OptionSequence?: number;
-    FileResourceId?: String;
-    QuestionImageUrl?: String;
+    FileResourceId?: string;
+    QuestionImageUrl?: string;
     RangeMin?: number;
     RangeMax?: number;
 }
 
 export interface QuestionDetailsResponseDto {
-    id: String;
+    id: string;
     Question: {
         id: string;
         Title: string;
@@ -32,8 +32,8 @@ export interface QuestionDetailsResponseDto {
     }
     Option: string;
     OptionSequence: number;
-    FileResourceId: String;
-    QuestionImageUrl: String;
+    FileResourceId: string;
+    QuestionImageUrl: string;
     RangeMin: number;
     RangeMax: number;
    

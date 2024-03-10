@@ -1,6 +1,6 @@
 import { UserResponseDto } from "../domain.types/forms/user.domain.types";
 
-export class FormMapper {
+export class UserMapper {
     static toDto = (record: any): UserResponseDto => {
         if (record === null) {
             return null;
@@ -27,7 +27,8 @@ export class FormMapper {
 
         const dtos: UserResponseDto[] = [];
 
-        record.forEach((element) => {
+        for (let i = 0; i < record.length; i++) {
+            const element = record[i];
             dtos.push({
                 id: element.id,
                 FirstName: element.FirstName,
@@ -39,8 +40,8 @@ export class FormMapper {
                 Password: element.Password,
                 CreatedAt: element.CreatedAt
             });
-            return dtos;
         }
-        )
+        return dtos;
+
     }
 }

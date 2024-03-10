@@ -21,31 +21,33 @@ export interface FormUpdateModel {
 }
 
 export interface FormResponseDto {
-    id: String;
+    id: string;
+    FormTemplateId:string,
     FormTemplate: {
-        id: String;
-        Title: String;
-        Description: String;
+        id: string;
+        Title: string;
+        Description: string;
         CurrentVersion: number;
-        Type: String;
-        DisplayCode: String;
-        OwnerUserId: String;
-        RootSectionId: String;
-        DefaultSectionNumbering: Boolean
+        Type: string;
+        DisplayCode: string;
+        OwnerUserId: string;
+        RootSectionId: string;
+        DefaultSectionNumbering: boolean
         CreatedAt: Date;
         UpdatedAt: Date;
     }
     FormUrl: string;
-    User: {
-        id: String;
-        FirstName: String;
-        LastName: String;
+    // AnsweresByUserId:string;
+    Users: {
+        id: string;
+        FirstName: string;
+        LastName: string;
         CountryCode: number;
-        Phone: String;
-        Email: String;
-        Username: String;
+        Phone: string;
+        Email: string;
+        Username: string;
     }
-    Status: FormStatus;
+    Status: string;
     SubmissionTimestamp: Date;
     CreatedAt: Date;
 }

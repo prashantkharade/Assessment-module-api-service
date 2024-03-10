@@ -10,8 +10,8 @@ export interface QuestionCreateModel {
     DisplayCode: string;
     ResponseType: QueryResponseType;
     Score: number;
-    CorrectAnswer: String;
-    Hint: String;
+    CorrectAnswer: string;
+    Hint: string;
 }
 
 export interface QuestionUpdateModel {
@@ -22,8 +22,8 @@ export interface QuestionUpdateModel {
     DisplayCode?: string;
     ResponseType?: QueryResponseType;
     Score?: number;
-    CorrectAnswer?: String;
-    Hint?: String;
+    CorrectAnswer?: string;
+    Hint?: string;
 }
 
 export interface QuestionResponseDto {
@@ -31,29 +31,29 @@ export interface QuestionResponseDto {
     Title: string;
     Description: string;
     DisplayCode: string;
-    ResponseType: QueryResponseType;
+    ResponseType: string;
     Score: number;
-    CorrectAnswer: String;
-    Hint: String;
-    Template: {
+    CorrectAnswer: string;
+    Hint: string;
+    FormTemplates: {
         id: string;
         Title: string;
         CurrentVersion: string;
-        Type: String;
-        DisplayCode: String;
-        OwnerUserId: String;
-        RootSectionId: String;
+        Type: string;
+        DisplayCode: string;
+        OwnerUserId: string;
+        RootSectionId: string;
         DefaultSectionNumbering: Boolean;
         CreatedAt: Date
     };
-    Section: {
+    FormSections: {
         id: string;
-        SectionIdentifier: String;
-        Title: String;
-        Description: String;
-        DisplayCode: String;
+        SectionIdentifier: string;
+        Title: string;
+        Description: string;
+        DisplayCode: string;
         Sequence: number;
-        ParentSectionId: String;
+        ParentSectionId: string;
         CreatedAt: Date
     }
     CreatedAt: Date;

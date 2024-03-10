@@ -29,7 +29,8 @@ export class FormTemplateMapper {
 
         const dtos: FormTemplateResponseDto[] = [];
 
-        record.forEach((element) => {
+        for (let i = 0; i < record.length; i++) {
+            const element = record[i];
             dtos.push({
                 id: element.id,
                 Title: element.Title,
@@ -43,8 +44,7 @@ export class FormTemplateMapper {
                 CreatedAt: element.CreatedAt,
                 UpdatedAt: element.UpdatedAt
             });
-            return dtos;
         }
-        )
+            return dtos;
     }
 }

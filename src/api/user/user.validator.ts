@@ -18,8 +18,8 @@ export class UserValidator extends BaseValidator {
                 CountryCode: joi.number(),
                 Phone: joi.string(),
                 Email: joi.string().email(),
-                Username: joi.number().required(),
-                Password: joi.boolean().required()
+                Username: joi.string().required(),
+                Password: joi.string().required()
             });
             await schema.validateAsync(request.body);
             return {
@@ -45,8 +45,8 @@ export class UserValidator extends BaseValidator {
                 CountryCode: joi.number().optional(),
                 Phone: joi.string().optional(),
                 Email: joi.string().email().optional(),
-                Username: joi.number().optional(),
-                Password: joi.boolean().optional()
+                Username: joi.string().optional(),
+                Password: joi.string().optional()
             });
             await schema.validateAsync(request.body);
             return {

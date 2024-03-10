@@ -57,7 +57,7 @@ model FormSection {
   Title             String
   Description       String
   DisplayCode       String       @default(uuid())
-  Sequence          Int
+  Sequence          String
   ParentSectionId   String
   CreatedAt         DateTime     @default(now())
   UpdatedAt         DateTime     @default(now())
@@ -108,8 +108,8 @@ model Response {
   Url                 String
   FileResourceId      String
   TextValue           String
-  SubmissionTimestamp DateTime
-  LastSaveTimestamp   DateTime
+  SubmissionTimestamp DateTime          @default(now())
+  LastSaveTimestamp   DateTime          @default(now())
   CreatedAt           DateTime          @default(now())
   UpdatedAt           DateTime          @default(now())
   DeletedAt           DateTime          @default(now())

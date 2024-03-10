@@ -9,28 +9,30 @@ export class FormMapper {
         const dto: FormResponseDto = {
             id: record.id,
             FormTemplate: {
-                id: record.Template.id,
-                Title: record.Template.Title,
-                Description: record.Template.Description,
-                CurrentVersion: record.Template.CorrectAnswer,
-                Type: record.Template.Type,
-                DisplayCode: record.Template.DisplayCode,
-                OwnerUserId: record.Template.OwnerUserId,
-                RootSectionId: record.Template.RootSectionId,
+                id: record.FormTemplate.id,
+                Title: record.FormTemplate.Title,
+                Description: record.FormTemplate.Description,
+                CurrentVersion: record.FormTemplate.CorrectAnswer,
+                Type: record.FormTemplate.Type,
+                DisplayCode: record.FormTemplate.DisplayCode,
+                OwnerUserId: record.FormTemplate.OwnerUserId,
+                RootSectionId: record.FormTemplate.RootSectionId,
                 DefaultSectionNumbering: record.DefaultSectionNumbering,
-                CreatedAt: record.Template.CreatedAt,
-                UpdatedAt: record.Template.UpdatedAt,
+                CreatedAt: record.FormTemplate.CreatedAt,
+                UpdatedAt: record.FormTemplate.UpdatedAt,
             },
+            Users: {
+                id: record.Users.id,
+                FirstName: record.Users.FirstName,
+                LastName: record.Users.LastName,
+                CountryCode: record.Users.CountryCode,
+                Phone: record.Users.Phone,
+                Email: record.Users.Email,
+                Username: record.Users.User,
+            },
+            FormTemplateId:record.FormTemplateId,
             FormUrl: record.FormUrl,
-            User: {
-                id: record.User.id,
-                FirstName: record.User.FirstName,
-                LastName: record.User.LastName,
-                CountryCode: record.User.CountryCode,
-                Phone: record.User.Phone,
-                Email: record.User.Email,
-                Username: record.User.User,
-            },
+            // AnsweresByUserId:record.AnsweresByUserId,
             Status: record.FormStatus,
             SubmissionTimestamp: record.SubmissionTimestamp,
             CreatedAt: record.CreatedAt,
@@ -45,37 +47,40 @@ export class FormMapper {
 
         const dtos: FormResponseDto[] = [];
 
-        record.forEach((element) => {
+        for (let i = 0; i < record.length; i++) {
+            const element = record[i];
             dtos.push({
                 id: element.id,
+                FormTemplateId:element.FormTemplateId,
                 FormTemplate: {
-                    id: element.Template.id,
-                    Title: element.Template.Title,
-                    Description: element.Template.Description,
-                    CurrentVersion: element.Template.CorrectAnswer,
-                    Type: element.Template.Type,
-                    DisplayCode: element.Template.DisplayCode,
-                    OwnerUserId: element.Template.OwnerUserId,
-                    RootSectionId: element.Template.RootSectionId,
+                    id: element.FormTemplate.id,
+                    Title: element.FormTemplate.Title,
+                    Description: element.FormTemplate.Description,
+                    CurrentVersion: element.FormTemplate.CorrectAnswer,
+                    Type: element.FormTemplate.Type,
+                    DisplayCode: element.FormTemplate.DisplayCode,
+                    OwnerUserId: element.FormTemplate.OwnerUserId,
+                    RootSectionId: element.FormTemplate.RootSectionId,
                     DefaultSectionNumbering: element.DefaultSectionNumbering,
-                    CreatedAt: element.Template.CreatedAt,
-                    UpdatedAt: element.Template.UpdatedAt,
+                    CreatedAt: element.FormTemplate.CreatedAt,
+                    UpdatedAt: element.FormTemplate.UpdatedAt,
                 },
                 FormUrl: element.FormUrl,
-                User: {
-                    id: element.User.id,
-                    FirstName: element.User.FirstName,
-                    LastName: element.User.LastName,
-                    CountryCode: element.User.CountryCode,
-                    Phone: element.User.Phone,
-                    Email: element.User.Email,
-                    Username: element.User.User,
+                // AnsweresByUserId:element.AnsweredByUserId,
+                Users: {
+                    id: element.Users.id,
+                    FirstName: element.Users.FirstName,
+                    LastName: element.Users.LastName,
+                    CountryCode: element.Users.CountryCode,
+                    Phone: element.Users.Phone,
+                    Email: element.Users.Email,
+                    Username: element.Users.User,
                 },
                 Status: element.FormStatus,
                 SubmissionTimestamp: element.SubmissionTimestamp,
-                CreatedAt: element.CreatedAt,
+                CreatedAt: element.CreatedAt
             });
-            return dtos;
-        });
+        }
+        return dtos;
     }
 }

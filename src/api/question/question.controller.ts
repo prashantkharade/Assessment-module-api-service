@@ -1,33 +1,22 @@
 import express from 'express';
 import { ResponseHandler } from '../../common/response.handler';
-import { FormTemplateValidator } from './form.template.validator';
 import { BaseController } from '../base.controller';
 import { ErrorHandler } from '../../common/error.handler';
 import { uuid } from '../../domain.types/miscellaneous/system.types';
 import { error } from 'console';
-import { FormTemplateService } from '../../services/form.template.service';
-import { FormTemplateCreateModel, FormTemplateUpdateModel } from '../../domain.types/forms/form.template.domain.types';
-import { randomInt } from 'crypto';
+import { QuestionService } from '../../services/question.service';
+import { QuestionValidator } from './question.validator';
+import { QuestionCreateModel, QuestionUpdateModel } from '../../domain.types/forms/question.domain.types';
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-export class FormTemplateController extends BaseController {
-    // createTypeModel = async (request: express.Request): Promise<FormTemplateCreateModel> => {
-    //     const model: FormTemplateCreateModel = {
-    //         Title: request.body.Title,
-    //         Description: request.body.Description ?? null,
-    //         Type: request.body.Type,
-    //         CurrentVersion: request.body.CurrentVersion ?? 1,
-    //         DisplayCode: request.body.DisplayCode ?? `FT-${randomInt(10000)}`,
-    //         DefaultSectionNumbering: request.body.DefaultSectionNumbering ?? false,
-    //     };
-    //     return model;
-    // };
+export class QuestionController extends BaseController {
+
     //#region member variables and constructors
 
-    _service: FormTemplateService = new FormTemplateService();
+    _service: QuestionService = new QuestionService();
 
-    _validator: FormTemplateValidator = new FormTemplateValidator();
+    _validator: QuestionValidator = new QuestionValidator();
 
     constructor() {
         super();
@@ -37,9 +26,9 @@ export class FormTemplateController extends BaseController {
 
     getAll = async (request: express.Request, response: express.Response) => {
         try {
-            const record = await this._service.allFormTemplates();
+            const record = await this._service.allQuestions();
             if (record === null) {
-                ErrorHandler.throwInternalServerError('Unable to add Form!', error);
+                ErrorHandler.throwInternalServerError('Unable to add Question!', error);
             }
             const message = 'Form template added successfully!';
             return ResponseHandler.success(request, response, message, 201, record);
@@ -52,7 +41,7 @@ export class FormTemplateController extends BaseController {
         try {
             // await this.authorize('Form.Create', request, response);
             // const model = await this.createTypeModel(request);
-            let model: FormTemplateCreateModel = await this._validator.validateCreateRequest(request);
+            let model: QuestionCreateModel = await this._validator.validateCreateRequest(request);
             const record = await this._service.create(model);
             if (record === null) {
                 ErrorHandler.throwInternalServerError('Unable to add Form!', error);
@@ -80,7 +69,7 @@ export class FormTemplateController extends BaseController {
         try {
             // await this.authorize('Form.Update', request, response);
             const id = await this._validator.validateParamAsUUID(request, 'id');
-            var model: FormTemplateUpdateModel = await this._validator.validateUpdateRequest(request);
+            var model: QuestionUpdateModel = await this._validator.validateUpdateRequest(request);
             const updatedRecord = await this._service.update(id, model);
             const message = 'Form updated successfully!';
             ResponseHandler.success(request, response, message, 200, updatedRecord);
@@ -100,20 +89,5 @@ export class FormTemplateController extends BaseController {
             ResponseHandler.handleError(request, response, error);
         }
     };
-    submissions = async (request: express.Request, response: express.Response) => {
-        try {
-            // let id = request.params.id;
-            // await this.authorize('Form.GetById', request, response);
-            var id: uuid = await this._validator.validateParamAsUUID(request, 'id');
-            const record = await this._service.submissions(id);
-            const message = 'Form retrieved successfully!';
-            return ResponseHandler.success(request, response, message, 200, record);
-        } catch (error) {
-            ResponseHandler.handleError(request, response, error);
-        }
-    };
-
-
-
 }
 

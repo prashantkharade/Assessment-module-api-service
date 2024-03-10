@@ -5,7 +5,7 @@ import { FormStatus, QueryResponseType } from "@prisma/client";
 export interface ResponseCreateModel {
     FormId: string;
     FormTemplateId: string;
-    QuestionId: String;
+    QuestionId:string;
     ResponseType: QueryResponseType;
     IntegerValue: number;
     FloatValue: GLfloat;
@@ -22,7 +22,7 @@ export interface ResponseCreateModel {
 export interface ResponseUpdateModel {
     FormId?: string;
     FormTemplateId?: string;
-    QuestionId?: String;
+    QuestionId?:string;
     ResponseType?: QueryResponseType;
     IntegerValue?: number;
     FloatValue?: GLfloat;
@@ -37,9 +37,9 @@ export interface ResponseUpdateModel {
 }
 
 export interface ResponseResponseDto {
-    id: String;
-    Form: {
-        id: String;
+    id:string;
+    Forms: {
+        id:string;
         TemplateId: string;
         FormUrl: string;
         UserId: string;
@@ -47,27 +47,27 @@ export interface ResponseResponseDto {
         SubmissionTimestamp: Date;
         CreatedAt: Date;
     }
-    FormTemplate: {
-        id: String;
-        Title: String;
-        Description: String;
+    FormTemplates: {
+        id:string;
+        Title:string;
+        Description:string;
         CurrentVersion: number;
-        Type: String;
-        DisplayCode: String;
-        OwnerUserId: String;
-        RootSectionId: String;
-        DefaultSectionNumbering: Boolean
+        Type:string;
+        DisplayCode:string;
+        OwnerUserId:string;
+        RootSectionId:string;
+        DefaultSectionNumbering: boolean
         CreatedAt: Date;
     }
-    Question: {
+    Questions: {
         id: string;
         Title: string;
         Description: string;
         DisplayCode: string;
         ResponseType: QueryResponseType;
         Score: number;
-        CorrectAnswer: String;
-        Hint: String;
+        CorrectAnswer:string;
+        Hint:string;
         TemplateId: string;
         SectionId: string;
         CreatedAt: Date;

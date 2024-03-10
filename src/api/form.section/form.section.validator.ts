@@ -17,7 +17,7 @@ export class FormSectionValidator extends BaseValidator {
                 SectionIdentifier: joi.string(),
                 Title: joi.string().required(),
                 Description: joi.string(),
-                DisplayCode: joi.date(),
+                DisplayCode: joi.string(),
                 Sequence: joi.string(),
                 ParentSectionId: joi.string().uuid(),
             });
@@ -39,11 +39,11 @@ export class FormSectionValidator extends BaseValidator {
     public validateUpdateRequest = async (request: express.Request): Promise<FormSectionUpdateModel | undefined> => {
         try {
             const schema = joi.object({
-                TemplateId: joi.string().uuid().optional(),
+                // TemplateId: joi.string().uuid().optional(),
                 SectionIdentifier: joi.string().optional(),
                 Title: joi.string().optional(),
                 Description: joi.string().optional(),
-                DisplayCode: joi.date().optional(),
+                DisplayCode: joi.string().optional(),
                 Sequence: joi.string().optional(),
                 ParentSectionId: joi.string().uuid().optional()
             });

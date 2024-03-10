@@ -3,28 +3,43 @@ import * as express from "express";
 import { PrismaClientInit } from "../startup/prisma.client.init";
 import { FormMapper } from "../mappers/form.mapper"
 import { FormCreateModel, FormUpdateModel } from "../domain.types/forms/form.domain.types";
+import moment from "moment";
 
-export class ServiceForm {
+export class FormService {
     prisma: PrismaClient = null;
     constructor() {
         this.prisma = PrismaClientInit.instance().getPrismaInstance();
     }
 
-    allForms = async () => {
-        const response = await this.prisma.form.findMany({});
+    allForms = async (): Promise<any> => {
+        const response = await this.prisma.form.findMany({
+            include: {
+                FormTemplate: true,
+                Users: true
+            }
+        });
         return FormMapper.toArrayDto(response);
     };
 
     create = async (model: FormCreateModel) => {
         const response = await this.prisma.form.create({
             data: {
-                FormTemplateId: model.FormTemplateId,
+                FormTemplate: {
+                    connect: { id: model.FormTemplateId }
+                },
+                Users: {
+                    connect: { id: model.AnsweredByUserId }
+                },
                 FormUrl: model.FormUrl,
-                AnsweredByUserId: model.AnsweredByUserId,
                 Status: model.Status,
             },
+            include: {
+                FormTemplate: true,
+                Users: true
+            }
         });
         return FormMapper.toDto(response);
+        // return response;
     };
 
     update = async (id: string, model: FormUpdateModel) => {
@@ -38,6 +53,10 @@ export class ServiceForm {
                 AnsweredByUserId: model.AnsweredByUserId,
                 Status: model.Status,
             },
+            include: {
+                FormTemplate: true,
+                Users: true
+            },
         });
         return FormMapper.toDto(response);
     };
@@ -46,10 +65,15 @@ export class ServiceForm {
 
     getById = async (id: string) => {
         const response = await this.prisma.form.findUnique({
+            include: {
+                FormTemplate: true,
+                Users: true
+            },
             where: {
                 id: id,
             },
         });
+        // return response;
         return FormMapper.toDto(response);
     };
 
@@ -58,6 +82,10 @@ export class ServiceForm {
         const response = await this.prisma.form.delete({
             where: {
                 id: id,
+            },
+            include: {
+                FormTemplate: true,
+                Users: true
             },
         });
         return FormMapper.toDto(response);
@@ -68,18 +96,23 @@ export class ServiceForm {
             where: {
                 FormTemplateId: id,
             },
+            include: {
+                FormTemplate: true,
+                Users: true
+            },
         });
         return FormMapper.toArrayDto(response);
     };
 
-    // getByResponse = async (phone: string) => {
-    //     const response = await this.prisma.form.findMany({
-    //         where: {
-    //             Phone: phone,
-    //         },
-    //     });
-    //     return response;
-    // };
+    getByResponse = async (phone: string) => {
+        const response = await this.prisma.form.findMany({
+            // where: {
+            //     id:id,
+
+            // },
+        });
+        return response;
+    };
 
     submit = async (model: FormUpdateModel) => {
         const response = await this.prisma.form.create({
@@ -89,7 +122,30 @@ export class ServiceForm {
                 AnsweredByUserId: model.AnsweredByUserId,
                 Status: model.Status,
             },
+            include: {
+                FormTemplate: true,
+                Users: true
+            },
         });
         return FormMapper.toDto(response);
+    };
+
+    getByDate = async (date: string) => {
+        const startDate = moment(date).startOf('day').toDate();
+        const endDate = moment(date).endOf('day').toDate();
+
+        const response = await this.prisma.form.findMany({
+            include: {
+                FormTemplate: true,
+                Users: true
+            },
+            where: {
+                CreatedAt: {
+                    gte: startDate,
+                    lte: endDate,
+                },
+            },
+        });
+        return FormMapper.toArrayDto(response);
     };
 }

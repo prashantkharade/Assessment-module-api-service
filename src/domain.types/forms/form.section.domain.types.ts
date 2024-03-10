@@ -1,43 +1,44 @@
 export interface FormSectionCreateModel {
     TemplateId: string;
-    SectionIdentifier: number;
-    Title: String;
-    Description: String;
-    DisplayCode: String;
-    Sequence: String;
-    ParentSectionId: String;
+    SectionIdentifier: string;
+    Title: string;
+    Description: string;
+    DisplayCode: string;
+    Sequence: string;
+    ParentSectionId: string;
     // CreatedAt: Date;
 }
 
 export interface FormSectionUpdateModel {
-    SectionIdentifier?: number;
-    Title?: String;
-    Description?: String;
-    DisplayCode?: String;
-    Sequence?: String;
-    ParentSectionId?: String;
+    SectionIdentifier?: string;
+    Title?: string;
+    Description?: string;
+    DisplayCode?: string;
+    Sequence?: string;
+    ParentSectionId?: string;
     // CreatedAt?: Date;
 }
 
 export interface FormSectionResponseDto {
-    id: String;
-    Template: {
+    id: string;
+    FormTemplates: {
         id: string;
-        Title: String;
-        Description: String;
+        Title: string;
+        Description: string;
         CurrentVersion: number;
-        Type: String;
-        DisplayCode: String;
-        OwnerUserId: String;
-        RootSectionId: String;
+        Type: string;
+        DisplayCode: string;
+        OwnerUserId: string;
+        RootSectionId: string;
         DefaultSectionNumbering: Boolean
     }
+    // TemplateId:string;
     SectionIdentifier: number;
-    Title: String;
-    Description: String;
-    DisplayCode: String;
-    Sequence: String;
-    ParentSectionId: String;
+    Title: string;
+    Description: string;
+    DisplayCode: string;
+    Sequence: string;
+    ParentSectionId: string;
     CreatedAt: Date;
     UpdatedAt: Date;
 }

@@ -1,6 +1,6 @@
 import { QuestionDetailsResponseDto } from "../domain.types/forms/question.details.domain.types";
 
-export class FormMapper {
+export class QuestionDetailMapper {
     static toDto = (record: any): QuestionDetailsResponseDto => {
         if (record === null) {
             return null;
@@ -34,8 +34,8 @@ export class FormMapper {
         }
 
         const dtos: QuestionDetailsResponseDto[] = [];
-
-        record.forEach((element) => {
+        for (let i = 0; i < record.length; i++) {
+            const element = record[i];
             dtos.push({
                 id: element.id,
                 Question: {
@@ -55,8 +55,8 @@ export class FormMapper {
                 RangeMin: element.RangeMin,
                 RangeMax: element.Ranelement
             });
-            return dtos;
         }
-        )
+        return dtos;
     }
+
 }
